@@ -1,3 +1,30 @@
-h1 {
+* {
 	text-align: center;
+	box-sizing: border-box;
+}
+.container {
+	min-width: 500px;
+	max-width: 900px;
+	margin: 0 auto;
+	background-color: grey;
+	padding: 20px;
+}
+ul {
+	padding: 20px;
+	margin: 0 auto;
+	min-width: 500px;
+	text-align: center;
+	list-style-type: none;
+}
+
+li {
+	text-align: center;
+	background-color: lightgrey;
+	height: 100px;
+	min-width: 300px;
+	margin: 10px auto;
+	border-radius: 10px;
+	padding-top: 40px;
+
+
 }
