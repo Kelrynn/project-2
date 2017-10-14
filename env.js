@@ -1,0 +1,7 @@
+const ID = "GDXuLx4WDI6UDP9EM9u1XQ",
+	  SECRET = "YxcAXDLupW9bHEGyyC8m3hveNcamsw4SgtulvSOmTkkYWs8Myr3AyWgoJIWq9fKO";	
+
+module.exports = {
+	YELP_CLIENT_ID: ID,
+	YELP_CLIENT_SECRET: SECRET
+};
