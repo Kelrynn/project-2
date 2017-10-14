@@ -2,18 +2,23 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Restaurants</title>
+	<title>HankerTown App</title>
+	<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 	<link rel="stylesheet" href="/styles/style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
-	<div class="container">
 	<h2>Nearby Restaurants</h2>
+	<div class="container">
 	<ul>
-		<%for(let i = 0; i < data.length; i++){%>
-		<li><%=data[i].restaurant.name%></li>
+		<%for (let i = 0; i < restaurants.length; i++){%>
+		<li><%=restaurants[i].name%> <br><%=restaurants[i].location.address1%></li>
 		<%}%>
 	</ul>
 </div>
 </body>
 </html>
+
+
+
+

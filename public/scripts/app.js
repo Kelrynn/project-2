@@ -1,24 +1,23 @@
 console.log("Sanity Check: JS is working!");
 $(function() {
 	navigator.geolocation.getCurrentPosition(showPosition);
-	// $('h2').html("Nearby Restaurants to: " + navigator.geolocation.getCurrentPosition());
 
 	function showPosition(position) {
     	let lat = position.coords.latitude;
     	let lon = position.coords.longitude;
-    	$('h2').html("Nearby Restaurants to : " + lat + ", "+ lon);
+    	$('h2').html("Nearby Restaurants to: " + lat + ", " + lon);
 
     	$.ajax({
-    		url: '/',
+    		url: '/location',
     		type: 'post',
     		data: {lat,lon},
     	})
     	.done(function(data) {
     		console.log("successful post request");
-    		window.location.href += "home";
+    		$('body').replaceWith(data);
     	})
     	.fail(function() {
-    		console.log("error");
+    		console.log("error with request");
     	})
     	.always(function() {
     		console.log("completed request");
