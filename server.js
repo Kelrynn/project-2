@@ -31,7 +31,6 @@ request.post({
 }, function (err, httpResponse, body) { 
 	body = JSON.parse(body);
 	YELP_TOKEN = body.access_token;
-	console.log("YELP TOKEN: " + YELP_TOKEN);
 });
 
 
