@@ -67,4 +67,12 @@ p {
 
 h2 {
 	background-color: orange;
+} 
+
+.card {
+	margin: 10px;
+}
+
+.container {
+	padding-top: 20px;
 }
