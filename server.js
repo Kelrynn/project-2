@@ -3,7 +3,6 @@ const express = require('express'),
 	  bodyParser = require('body-parser'),
 	  path = require('path'),
 	  request = require('request'),
-	  ZOMATO_KEY = require('./env.js').ZOMATO_API_KEY,
 	  YELP_ID = require('./env.js').YELP_CLIENT_ID,
 	  YELP_SECRET = require('./env.js').YELP_CLIENT_SECRET;
 
@@ -31,6 +30,7 @@ request.post({
 }, function (err, httpResponse, body) { 
 	body = JSON.parse(body);
 	YELP_TOKEN = body.access_token;
+	console.log(YELP_TOKEN);
 });
 
 
