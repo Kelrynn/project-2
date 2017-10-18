@@ -22,6 +22,7 @@ $(function() {
     	.always(function() {
     		console.log("completed request");
     	});
-    	
 	}
+
+    
 });
