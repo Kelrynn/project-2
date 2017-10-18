@@ -7,12 +7,7 @@ const express = require('express'),
 	  flash = require('connect-flash'),
 	  session = require('express-session'),
 	  cookieParser = require('cookie-parser');
-
-const YELP_ID = require('./config/env.js').YELP_CLIENT_ID;
-const YELP_SECRET = require('./config/env.js').YELP_CLIENT_SECRET;
-
-let YELP_TOKEN;
-
+require('dotenv').config();
 
 // app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -27,6 +22,8 @@ app.use(express.static(__dirname + '/public'));
 // app.use(passport.initialize());
 // app.use(passport.session()); 
 // app.use(flash()); 
+let yelpToken = require('./controllers/yelpToken.js');
+app.use(yelpToken);
 
 let routes = require('./config/routes');
 app.use(routes);

@@ -12,7 +12,7 @@ router.route('/')
 router.route('/location')
 	.post(restaurantsController.displayRestaurants);
 
-router.route('/login')
-	.get(userAuthenticationController.get);
+//router.route('/login')
+//	.get(userAuthenticationController.get);
 
 module.exports = router;
