@@ -40,7 +40,6 @@ h3 {
 div {
 	margin: 0;
 	padding: 0;
-	display: inline-block;
 }
 
 a{
@@ -50,15 +49,14 @@ a{
 p {
 	display: inline-block;
 }
-
-h2 {
-	background-color: orange;
-} 
-
 .card {
 	margin: 10px;
 }
 
 .container {
 	padding-top: 20px;
+}
+
+#login {
+	height: 75vh;
 }

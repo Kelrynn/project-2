@@ -1,10 +1,12 @@
 let mongoose = require('mongoose');
-let bcrypt = require('bcrypt');
+let bcrypt = require('bcrypt-nodejs');
 let Schema = mongoose.Schema;
 
-let UserSchema = new Schema({
-	username: String,
-	password: String,
+let User = mongoose.Schema({
+	local : {
+		email: String,
+		password: String,
+	},
 	reviews: [{
 		type: Schema.Types.ObjectId,
     	ref: 'Review'
@@ -15,14 +17,14 @@ let UserSchema = new Schema({
 	}]
 });
 
-let User = mongoose.model('User', UserSchema);
-
 User.methods.encrypt = function (password) {
+	console.log('encrypt()');
 	return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 };
 
 User.methods.validPassword = function (password) {
+	console.log('validPassword()');
 	return bcrypt.compareSync(password, this.local.password);
 };
 
-module.exports = User;
+module.exports = mongoose.model('User', User);
