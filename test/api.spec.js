@@ -17,20 +17,20 @@ describe('api',function(){
 		  }
 		}, function (err, httpResponse, body) { 
 			body = JSON.parse(body);
-			console.log(body);
 			YELP_TOKEN = body.access_token;
+			let options = {
+			  	url: "https://api.yelp.com/v3/businesses/search?location=Denver",
+			  	headers: {Authorization: "Bearer " + YELP_TOKEN}
+			};
+			request(options, function(err, res, body){
+				if (err) console.log("ERROR: " + err);
+				apiError = err;
+				apiResponse = res;
+				apiBody = body;
+				done();
+			});
 		});
-		let options = {
-		  	url: "https://api.yelp.com/v3/businesses/search?location=Denver",
-		  	headers: {Authorization: "Bearer " + YELP_TOKEN}
-		};
-		request(options, function(err, res, body){
-			if (err) console.log("ERROR: " + err);
-			apiError = err;
-			apiResponse = res;
-			apiBody = body;
-			done();
-		});
+		
 		
 	});
 	it ("should retrieve id from env.js", function() {
@@ -43,10 +43,12 @@ describe('api',function(){
 		expect(YELP_TOKEN).to.not.eq("");
 	})
 	it('should give back 200 status code', function() {
-		console.log(apiResponse);
 		expect(apiResponse.statusCode).to.eq(200);
 	});
-	it('should give a list of restaurants near location');
+	it('should give a list of restaurants near location', function() {
+		apiBody = JSON.parse(apiBody);
+		expect(apiBody.businesses).to.be.an('array');
+	});
 });
 
 

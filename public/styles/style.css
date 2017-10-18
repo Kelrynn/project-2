@@ -43,20 +43,6 @@ div {
 	display: inline-block;
 }
 
-.main {
-	background-color: #141414;
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100vh;
-	width: 100%;
-}
-
-img {
-	padding-top: 10%;
-	margin: 0 auto;
-}
-
 a{
 	color: white;
 }
