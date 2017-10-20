@@ -1,7 +1,7 @@
 const expect = require('chai').expect,
 	  request = require('request'),
-	  ID = require('../env.js').YELP_CLIENT_ID,
-	  SECRET = require('../env.js').YELP_CLIENT_SECRET;
+	  ID = require('./env.js').YELP_CLIENT_ID,
+	  SECRET = require('./env.js').YELP_CLIENT_SECRET;
 
 
 

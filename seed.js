@@ -124,6 +124,8 @@ db.Review.remove({}, function(err) {
 			user1.save();
 			user2.save();
 			console.log("Created 3 reviews: " + rev0, rev1, rev2);
+			console.log("Created 3 restaurants: " + rest0, rest1, rest2);
+			console.log("Created 3 users: " + user0, user1, user2);
 		});
 	});
 });

@@ -9,24 +9,23 @@
 			links n shit vertically
 		</div>
 	</aside>
-	<div class="main col-10">
+	<div class="main col mr-2">
 		<h2>Places</h2>
 		<hr>
-		<%=user%>
-		<%for (let i = 0; i < user.visited; i++){%>
-			<div class="card bg-light col-md-5">
+		<%for (let i = 0; i < visited.length; i++){%>
+			<div class="card bg-light col-md">
 				<div class="card-body">
-					<h4 class="card-title"><%=user.visited[i].name%></h4>
-					<h6 class="card-subtitle text-muted mb-2"><%=user.visited[i].display_phone%> <br> <%=user.visited[i].location.display_address%></h6>
+					<h4 class="card-title"><%=visited[i].name%></h4>
+					<h6 class="card-subtitle text-muted mb-2"><%=visited[i].display_phone%> <br> <%=visited[i].display_address%></h6>
 				</div>
 			</div>
 		<%}%>
 		<h2>Reviews</h2>
-		<%=reviews%>
 		<%for (let i = 0; i < reviews.length; i++){%>
-			<div class="card bg-light col-md-5">
+			<div class="card bg-light col">
 				<div class="card-body">
-					<h4 class="card-title"><%=reviews[i].rating%></h4>
+					<h4 class="card-title"><%=reviews[i].restaurant.name%></h4>
+					<h4 class="card-subtitle mb-2"><%=reviews[i].rating%></h4>
 					<h6 class="card-subtitle text-muted mb-2"><%=reviews[i].comment%></h6>
 				</div>
 			</div>

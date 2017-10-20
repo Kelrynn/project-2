@@ -1,62 +1,16 @@
 * {
-	text-align: center;
-	box-sizing: border-box;
-	font-family: 'Nunito', sans-serif;
-}
-html{
-	background-color: #141414;
-}
-.container {
-	min-width: 500px;
-	max-width: 900px;
-	margin: 0 auto;
-	background-color: grey;
-	
-}
-ul {
-	padding: 20px;
-	margin: 0 auto;
-	min-width: 500px;
-	text-align: center;
-	list-style-type: none;
-}
+  text-align: center;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif; }
 
-li {
-	background-color: lightgrey;
-	padding-top: 20px;
-	height: 100px;
-	min-width: 300px;
-	margin: 10px auto;
-	border-radius: 10px;
-	justify-content: flex-start;
-}
+html, body {
+  background-color: #4484CE; }
 
-h3 {
-	margin: 0;
-	padding: 0;
-	display: inline-block;
-}
+div .card {
+  margin: 5px;
+  background-color: #D9D9D9;
+  color: black;
+  padding: 10px; }
 
-div {
-	margin: 0;
-	padding: 0;
-}
-
-a{
-	color: white;
-}
-
-p {
-	display: inline-block;
-}
-.card {
-	margin: 10px;
-}
-
-.container {
-	padding-top: 20px;
-}
-
-#login {
-	height: 75vh;
-}
+div .card-body {
+  background-color: #F19F4D; }
