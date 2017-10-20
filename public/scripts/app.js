@@ -6,7 +6,6 @@ $(function() {
 function showPosition(position) {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
-    $('h2').html("Nearby Restaurants to: " + lat + ", " + lon);
 
     $.ajax({
         url: '/location',

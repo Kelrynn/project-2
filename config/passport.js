@@ -24,7 +24,7 @@ module.exports = function(passport) {
 		db.User.findOne({'local.email' : email}, function (err, user) {
 			if(err) return callback(err);
 			if(user) {
-				return callback(null, false, req.flash('signupMessage', 'That email is already in use.'));
+				return callback(null, false, req.flash('message', 'That email is already in use.'));
 			} else {
 				let newUser = new db.User();
 				newUser.local.email = email;
@@ -47,7 +47,7 @@ module.exports = function(passport) {
 			if(err) callback(err);
 			//wrong info
 			if(!user || !(user.validPassword(password))){
-				return callback(null, false, req.flash('loginMessage', 'Username or Password incorrect.'));
+				return callback(null, false, req.flash('message', 'Username or Password incorrect.'));
 			}
 			return callback(null, user);
 		});

@@ -1,3 +1,8 @@
-<nav class="nav justify-content-end">
+<nav class="nav justify-content-end bg-warning">
+	<%if (currentUser) { %>
+		<a href="/logout" class="nav-item nav-link">Logout</a>
+		<a href="/profile" class="nav-item nav-link">Profile</a>
+	<%} else {%>
 	<a href="/login" class="nav-item nav-link">Login / Sign Up</a>
+	<%}%>
 </nav>

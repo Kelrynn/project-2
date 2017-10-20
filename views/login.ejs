@@ -1,5 +1,8 @@
 <% include ./partials/header.ejs %>
 <div class="container-fluid bg-secondary">
+	<%if(message.length > 0) {%>
+		<div class="alert alert-danger"><%= message %></div>
+	<%}%>
 	<div id='login' class="row justify-content-md-center">
 		<div class="col-md-6 mb-2 align-self-center">
 			<h2 class="bg-warning">Login</h2>
@@ -19,6 +22,7 @@
 		</div>
 
 		<div class="col-md-6 mb-2 align-self-center">
+
 			<h2 class="bg-warning">Sign Up</h2>
 			<form method="post" action="/signup">
 			  <div class="form-group">

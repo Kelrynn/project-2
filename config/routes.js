@@ -8,19 +8,33 @@ const passport = require('passport');
 let restaurantsController = require('../controllers/restaurantsController');
 let userAuthenticationController = require('../controllers/userAuthenticationController');
 
+function authenticatedUser(req, res, next) {
+// If the user is authenticated, then we continue the execution
+if (req.isAuthenticated()) return next();
+// Otherwise the request is always redirected to the home page
+res.redirect('/login');
+}
+
 //////////////
 ///	ROUTES ///
 //////////////
 router.route('/')
-	.get(restaurantsController.loadingPage);
+	.get(authenticatedUser, restaurantsController.loadingPage);
 
 router.route('/location')
 	.post(restaurantsController.displayRestaurants);
 
 router.route('/login')
-	.get(userAuthenticationController.get);
+	.get(userAuthenticationController.get)
+	.post(userAuthenticationController.postLogin);
 
 router.route('/signup')
 	.post(userAuthenticationController.postSignup);
+
+router.route('/logout')
+	.get(userAuthenticationController.logout);
+
+router.route('/profile')
+	.get(authenticatedUser, restaurantsController.getProfile);
 
 module.exports = router;

@@ -1,0 +1,37 @@
+<%include partials/header%>
+<div class="container-fluid">
+	<div class="row justify-content-md-center">
+	<aside class="col-md-2">
+		<div>
+			<img src="http://via.placeholder.com/400x400" alt="user profile image" class="img-fluid">
+		</div>
+		<div>
+			links n shit vertically
+		</div>
+	</aside>
+	<div class="main col-10">
+		<h2>Places</h2>
+		<hr>
+		<%=user%>
+		<%for (let i = 0; i < user.visited; i++){%>
+			<div class="card bg-light col-md-5">
+				<div class="card-body">
+					<h4 class="card-title"><%=user.visited[i].name%></h4>
+					<h6 class="card-subtitle text-muted mb-2"><%=user.visited[i].display_phone%> <br> <%=user.visited[i].location.display_address%></h6>
+				</div>
+			</div>
+		<%}%>
+		<h2>Reviews</h2>
+		<%=reviews%>
+		<%for (let i = 0; i < reviews.length; i++){%>
+			<div class="card bg-light col-md-5">
+				<div class="card-body">
+					<h4 class="card-title"><%=reviews[i].rating%></h4>
+					<h6 class="card-subtitle text-muted mb-2"><%=reviews[i].comment%></h6>
+				</div>
+			</div>
+		<%}%>
+	</div>
+	</div>
+</div>
+<%include partials/footer%>
