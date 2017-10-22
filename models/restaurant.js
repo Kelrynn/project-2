@@ -9,7 +9,8 @@ let RestaurantSchema = new Schema({
 	reviews: [{
 		type: Schema.Types.ObjectId,
 		ref: 'Review'
-	}]
+	}],
+	restaurantId: String
 
 });
 

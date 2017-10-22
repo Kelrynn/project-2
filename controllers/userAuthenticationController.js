@@ -8,7 +8,7 @@ function get(req, res, next) {
 
 function postLogin(req, res, next) {
 	let loginStrategy = passport.authenticate('local-login', {
-		successRedirect: '/profile',
+		successRedirect: '/',
 		failureRedirect: '/login',
 		failureFlash: true
 	});

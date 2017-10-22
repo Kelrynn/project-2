@@ -37,4 +37,12 @@ router.route('/logout')
 router.route('/profile')
 	.get(authenticatedUser, restaurantsController.getProfile);
 
+router.route('/comments')
+	.post(authenticatedUser, restaurantsController.newComment)
+	.get(authenticatedUser, restaurantsController.getComments);
+
+router.route('/restaurants')
+	.post(authenticatedUser, restaurantsController.toggleRestaurant)
+	.get(authenticatedUser, restaurantsController.sendList);
+
 module.exports = router;

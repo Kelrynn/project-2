@@ -14,3 +14,5 @@ div .card {
 
 div .card-body {
   background-color: #F19F4D; }
+  div .card-body .btn {
+    margin: 8px; }

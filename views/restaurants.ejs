@@ -4,13 +4,27 @@
 <div class="container-fluid">
 	<div class="row justify-content-md-center">
 		<%for (let i = 0; i < restaurants.length; i++){%>
-			<div class="card col-md-5">
+			<div class="card col-md-5" restaurantId='<%=restaurants[i].id%>'>
 				<div class="card-body">
 					<h4 class="card-title"><%=restaurants[i].name%></h4>
-					<h6 class="card-subtitle  mb-2"><%=restaurants[i].display_phone%> <br> <%=restaurants[i].location.display_address%></h6>
+					<h6 class="card-subtitle  mb-2"><%=restaurants[i].display_phone%><br> <%=restaurants[i].location.display_address%></h6>
 					<p class="card-text"><%-restaurants[i].categories[0].title%></p><br>
-					<a href="#" class="card-link align-self-end" disabled>Menu</a>
-					<a href="#" class="card-link align-self-end" disabled>Map</a>
+					<div class="container row">
+						<div class="col-6 container row  justify-content-start">
+							<a href="#" class="card-link" disabled><button class="btn">Menu</button></a>
+							<a href="#" class="card-link" disabled><button class="btn">Map</button></a>
+						</div>
+						<div class="col-6 container row justify-content-end">
+							<button class="btn btn-success toggleRestaurant">+</button>
+							<button class="btn comments">View or add Comments</button>
+						</div>
+						<form action="/comments" method="post" class="cardForm">
+							<input type="number" name='rating'>
+							<textarea name="comment" id="" cols="30" rows="10"></textarea>
+							<input type="submit">
+							<input type="hidden" value="<%=restaurants[i].id%>" name='restaurantId'>
+						</form>
+					</div>
 				</div>
 			</div>
 		<%}%>

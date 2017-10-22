@@ -6,14 +6,14 @@
 			<img src="http://via.placeholder.com/400x400" alt="user profile image" class="img-fluid">
 		</div>
 		<div>
-			links n shit vertically
+			<a href="/">Go Home</a>
 		</div>
 	</aside>
 	<div class="main col mr-2">
 		<h2>Places</h2>
 		<hr>
 		<%for (let i = 0; i < visited.length; i++){%>
-			<div class="card bg-light col-md">
+			<div class="card bg-light col-md"  restaurantId='<%=visited[i].restaurantId%>'>
 				<div class="card-body">
 					<h4 class="card-title"><%=visited[i].name%></h4>
 					<h6 class="card-subtitle text-muted mb-2"><%=visited[i].display_phone%> <br> <%=visited[i].display_address%></h6>
