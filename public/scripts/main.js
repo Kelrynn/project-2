@@ -1,5 +1,7 @@
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 $(function () {
 	console.log("SANITY CHECK");
 	$('.cardForm').hide();
@@ -53,7 +55,13 @@ $(function () {
 			url: '/comments?r=' + restaurantId,
 			type: 'get'
 		}).done(function (data) {
-			console.log("success " + data);
+			console.log("success");
+			var comments = $('<div>');
+			data.forEach(function (r) {
+				var review = $('<div>').html(r.createdBy + ": " + r.rating + " " + r.comment).addClass('review');
+				comments.append(review);
+			});
+			card.find('.comment_section').empty().append(comments);
 			card.find('.cardForm').slideToggle('fast');
 		}).fail(function () {
 			console.log("error");
@@ -63,11 +71,19 @@ $(function () {
 	});
 	$('.cardForm').on('submit', function (event) {
 		event.preventDefault();
+		var form = $(this);
 		$.ajax({
 			url: '/comments?' + $(this).serialize(),
 			type: 'POST'
 		}).done(function (data) {
 			console.log(data);
+			if ((typeof data === 'undefined' ? 'undefined' : _typeof(data)) == 'object') {
+				form.slideToggle('slow');
+				form[0].reset();
+			} else {
+				var alert = $('<div>').addClass('alert alert-danger').html(data);
+				form.prepend(alert);
+			}
 		}).fail(function () {
 			console.log("error");
 		}).always(function () {

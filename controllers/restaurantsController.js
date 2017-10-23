@@ -1,5 +1,5 @@
 const request = require('request');
-let db = require('../models');
+const db = require('../models');
 
 
 function loadingPage(req, res, next) {
@@ -53,7 +53,7 @@ function getProfile(req, res) {
             });
         });
         //find all reviews a user has made
-        db.Review.find({ _id: { $in: reviews.reviews } }, function(err, reviews) {
+        db.Review.find({ _id: { $in: user.reviews } }, function(err, reviews) {
             revs = reviews;
             //for each review
             reviews.forEach((r, i) => {
@@ -103,39 +103,75 @@ function toggleRestaurant(req, res) {
 }
 
 function newComment(req, res) {
-    //make a new review object
-    let data = new db.Review(req.query);
-    console.log(req.query);
-    //find the current user in the db
-    db.User.findOne(req.user, function (err, user) {
-        //add the created by field to the review
-        data.createdBy = user._id;
-        //add the review to the user's list
-        user.reviews.push(data._id);
-        //save the update in the db
-        user.save();
-        //find the restaurant the comment was made on
-        db.Restaurant.findOne({restaurantId: req.query.restaurantId}, function (err, restaurant) {
+    let match = false;
+    //find user
+    db.User.findOne({_id: req.user._id}, function(err, user){
+        console.log(user);
+        db.Restaurant.findOne({restaurantId: req.query.restaurantId}, function (err, restaurant){
             console.log(restaurant);
-            //add the restaurant id to the review
-            data.restaurant = restaurant._id;
-            //add the review to the restaurant's list
-            restaurant.reviews.push(data._id);
-            //save the restaurant.
-            restaurant.save();
-            //save the review
-            data.save();
-            res.send("Added new comment");
+            //find restaurant
+            //compare to see if user has been to restaurant
+            if (restaurant)
+            user.visited.forEach(r => {
+                console.log('Comparing: ' + JSON.stringify(r) + " and " + JSON.stringify(restaurant._id));
+                if (JSON.stringify(r) == JSON.stringify(restaurant._id)){
+                    match = true;
+                    console.log("MATCH!");
+                    let review = new db.Review(req.query);
+                    user.reviews.push(review._id);
+                    restaurant.reviews.push(review._id);
+                    user.save();
+                    restaurant.save();
+                    review.createdBy = user._id;
+                    review.restaurant = restaurant._id;
+                    review.save();
+                    res.json(review);
+                }
+            });
+            if (!match)
+            res.send("Visit this restaurant before posting a review!");
+            
         });
     });
 }
 
 function getComments(req, res) {
+    console.log("getComments()");
+    let done = false;
+    let revs = [];
+    let interval = setInterval(function (){
+        console.log("interval!");
+        if(done){
+            clearInterval(interval);
+            res.json(revs);
+        }
+    },1);
     let id = req.query.r;
-    db.Restaurant.find({restaurantId: id}, function(err, restaurant){
+    //grab the restaurant by id
+    db.Restaurant.findOne({restaurantId: id}, function(err, restaurant){
+        console.log(restaurant);
+        if (restaurant.reviews.length === 0) done = true;
+        //grab all reviews in the restaurant
         db.Review.find({_id: {$in: restaurant.reviews}}, function(err, reviews){
-            res.json(reviews);
+            console.log(reviews);
+            //grab the user who made the comment
+            reviews.forEach(r => {
+                db.User.findOne({_id: r.createdBy}, function (err, user) {
+                    console.log(user);
+                    let rev = {
+                        _id: r._id,
+                        restaurant: r.restaurant,
+                        createdBy: user.local.email,
+                        rating: r.rating,
+                        comment: r.comment
+                    };
+                    console.log(rev);
+                    revs.push(rev);
+                    done = true;
+                });
+            });
         });
+
     });
 }
 

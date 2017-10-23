@@ -6,8 +6,9 @@
 		<%for (let i = 0; i < restaurants.length; i++){%>
 			<div class="card col-md-5" restaurantId='<%=restaurants[i].id%>'>
 				<div class="card-body">
+					<img src="<%=restaurants[i].image_url%>" alt="restaurant" class="card-img-top rounded-circle">
 					<h4 class="card-title"><%=restaurants[i].name%></h4>
-					<h6 class="card-subtitle  mb-2"><%=restaurants[i].display_phone%><br> <%=restaurants[i].location.display_address%></h6>
+					<h6 class="card-subtitle mb-2"><%=restaurants[i].display_phone%><br> <%=restaurants[i].location.display_address%></h6>
 					<p class="card-text"><%-restaurants[i].categories[0].title%></p><br>
 					<div class="container row">
 						<div class="col-6 container row  justify-content-start">
@@ -24,10 +25,11 @@
 							<input type="submit">
 							<input type="hidden" value="<%=restaurants[i].id%>" name='restaurantId'>
 						</form>
+						<div class="comment_section"></div>
 					</div>
 				</div>
 			</div>
 		<%}%>
 	</div>
 </div>
-<% include partials/footer %>
+<% include partials/footer %> 
