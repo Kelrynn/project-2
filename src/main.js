@@ -1,7 +1,7 @@
 $(function() {
 	console.log("SANITY CHECK");
 	$('.cardForm').hide();
-	if (window.location.href === 'http://localhost:3000/') {
+	if (window.location.href === 'http://localhost:3000/' || window.location.href === 'https://protected-dusk-42319.herokuapp.com/') {
 		$.get('/restaurants', function(data){
 			let cards = $('.card');
 			for (let i = 0; i < cards.length; i++){

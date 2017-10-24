@@ -5,7 +5,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 $(function () {
 	console.log("SANITY CHECK");
 	$('.cardForm').hide();
-	if (window.location.href === 'http://localhost:3000/') {
+	if (window.location.href === 'http://localhost:3000/' || window.location.href === 'https://protected-dusk-42319.herokuapp.com/') {
 		$.get('/restaurants', function (data) {
 			var cards = $('.card');
 			for (var i = 0; i < cards.length; i++) {
