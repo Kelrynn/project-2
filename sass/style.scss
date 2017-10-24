@@ -1,0 +1,47 @@
+$first: #4484CE;
+$second: #D9D9D9;
+$third: #F9CF00;
+$fourth : #F19F4D;
+
+* {
+    text-align: center;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+}
+
+html {
+    background-color: $first;
+}
+
+body {
+	@extend html;
+}
+
+div {
+    .card {
+        margin: 5px;
+        background-color: $second;
+        color: black;
+        padding: 10px;
+    }
+    .card-body {
+		background-color: $fourth;
+        .btn {
+            margin: 8px;
+        }
+    }
+
+    a{
+        display: block;
+    }
+}
+
+.review {
+    background-color: $second;
+    text-align: center;
+    display: block;
+    height: 2em;
+    padding: 4px;
+    border-radius: 5px;
+    margin: 6px;
+}
