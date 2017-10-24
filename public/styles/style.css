@@ -16,3 +16,15 @@ div .card-body {
   background-color: #F19F4D; }
   div .card-body .btn {
     margin: 8px; }
+
+div a {
+  display: block; }
+
+.review {
+  background-color: #D9D9D9;
+  text-align: center;
+  display: block;
+  height: 2em;
+  padding: 4px;
+  border-radius: 5px;
+  margin: 6px; }

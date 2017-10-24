@@ -7,9 +7,7 @@ $(function () {
 	$('.cardForm').hide();
 	if (window.location.href === 'http://localhost:3000/') {
 		$.get('/restaurants', function (data) {
-			console.log(data);
 			var cards = $('.card');
-			console.log(cards);
 			for (var i = 0; i < cards.length; i++) {
 				for (var j = 0; j < data.length; j++) {
 					if (cards[i].attributes['1'].value === data[j].restaurantId) {
@@ -22,13 +20,12 @@ $(function () {
 	$('.card').on('click', '.toggleRestaurant', function (event) {
 		var button = $(this);
 		var restaurant = {};
-		var $card = $(this.closest('.card'))[0];
-		restaurant.restaurantId = $card.attributes['1'].value;
-		var $data = $(this.closest('.card'))[0].children[0].children;
-		restaurant.name = $data[0].innerText;
-		var info = $data[1].innerText.split('\n');
-		restaurant.display_phone = info[0];
-		restaurant.display_address = info[1];
+		var card = $(this).closest('.card');
+		restaurant.restaurantId = card.attr('restaurantId');
+		restaurant.name = card.children().children().eq(1)[0].innerText;
+		var data = card.children().children().eq(2)[0].innerText.split('\n');
+		restaurant.display_phone = data[0];
+		restaurant.display_address = data[1];
 		$.ajax({
 			url: '/restaurants',
 			type: 'POST',
@@ -58,7 +55,7 @@ $(function () {
 			console.log("success");
 			var comments = $('<div>');
 			data.forEach(function (r) {
-				var review = $('<div>').html(r.createdBy + ": " + r.rating + " " + r.comment).addClass('review');
+				var review = $('<div>').html("<b>" + r.createdBy + "</b>" + ": " + r.rating + " " + r.comment).addClass('review col');
 				comments.append(review);
 			});
 			card.find('.comment_section').empty().append(comments);

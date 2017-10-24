@@ -7,6 +7,7 @@
 		</div>
 		<div>
 			<a href="/">Go Home</a>
+			<a href="/logout">Logout</a>
 		</div>
 	</aside>
 	<div class="main col mr-2">
@@ -26,7 +27,7 @@
 				<div class="card-body">
 					<h4 class="card-title"><%=reviews[i].restaurant.name%></h4>
 					<h4 class="card-subtitle mb-2"><%=reviews[i].rating%></h4>
-					<h6 class="card-subtitle text-muted mb-2"><%=reviews[i].comment%></h6>
+					<p class="card-text mb-2"><%=reviews[i].comment%></p>
 				</div>
 			</div>
 		<%}%>

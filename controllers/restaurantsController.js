@@ -73,64 +73,98 @@ function getProfile(req, res) {
 }
 
 function toggleRestaurant(req, res) {
-    let foundDupe = false;
     let user = req.user;
-    let restaurant = new db.Restaurant(req.body.restaurant);
-    db.User.findOne(user, function(err, user){
-        db.Restaurant.find({_id: {$in : user.visited}}, function(err, restaurants){
-            for (let i = 0; i < restaurants.length; i++){
-                if(restaurant.restaurantId === restaurants[i].restaurantId){
-                    foundDupe = true;
-                    db.Restaurant.remove(req.body.restaurant, function(err){
-                        user.visited.splice(i, 1);
-                        user.save();
-                        res.send("deleted.");
-                        return;
-                    });
-                    
-                }
-            }
-            if (!foundDupe){
-                user.visited.push(restaurant);
-                restaurant.save();
+    let done = false;
+    let removed = false;
+    let match = false;
+
+    //find the restaurant
+    db.Restaurant.findOne({ restaurantId: req.body.restaurant.restaurantId }, function(err, restaurant) {
+        let interval = setInterval(function() {
+            if (done) {
+                //should only execute if a restaurant exists but it is not linked to the current user
+                clearInterval(interval);
+                //add to user list
+                user.visited.push(restaurant._id);
+                //save
                 user.save();
-                res.send('Added.');
+                //return restaurant to the frontend
+                res.json(restaurant);
+            } else if (removed) {
+                clearInterval(interval);
             }
-        });
-        
+        }, 1);
+        //if it exists
+        if (restaurant) {
+            console.log("found restaurant");
+            //find all user's restaurants they visited
+            db.Restaurant.find({ _id: { $in: user.visited } }, function(err, restaurants) {
+                //for each restaurant
+                for (var i = 0; i < restaurants.length; i++) {
+                    console.log("loop");
+                    // if they match
+                    if (restaurants[i].restaurantId === restaurant.restaurantId) {
+                        //remove the current restaurant from the user
+                        user.visited.splice(i, 1);
+                        //save
+                        user.save();
+                        res.send("Removed.");
+                        clearInterval(interval);
+                        match = true;
+                    }
+                    if (i === restaurants.length - 1 && !match) {
+                        console.log("COnditional");
+                        done = true;
+                    }
+                }
+            });
+            if (user.visited.length === 0) {
+                console.log("empty array");
+                done = true;
+            }
+        } else {
+            console.log("Making new db entry for restaurant");
+            db.Restaurant.create(req.body.restaurant, function(err, restaurant) {
+                user.visited.push(restaurant._id);
+                user.save();
+                res.json(restaurant);
+            });
+        }
     });
+    // if not linked:link to user.
+    //if linked => unlink;
 
 }
 
 function newComment(req, res) {
     let match = false;
     //find user
-    db.User.findOne({_id: req.user._id}, function(err, user){
+    db.User.findOne({ _id: req.user._id }, function(err, user) {
         console.log(user);
-        db.Restaurant.findOne({restaurantId: req.query.restaurantId}, function (err, restaurant){
+        db.Restaurant.findOne({ restaurantId: req.query.restaurantId }, function(err, restaurant) {
             console.log(restaurant);
             //find restaurant
             //compare to see if user has been to restaurant
             if (restaurant)
-            user.visited.forEach(r => {
-                console.log('Comparing: ' + JSON.stringify(r) + " and " + JSON.stringify(restaurant._id));
-                if (JSON.stringify(r) == JSON.stringify(restaurant._id)){
-                    match = true;
-                    console.log("MATCH!");
-                    let review = new db.Review(req.query);
-                    user.reviews.push(review._id);
-                    restaurant.reviews.push(review._id);
-                    user.save();
-                    restaurant.save();
-                    review.createdBy = user._id;
-                    review.restaurant = restaurant._id;
-                    review.save();
-                    res.json(review);
-                }
-            });
+                user.visited.forEach(r => {
+                    console.log('Comparing: ' + JSON.stringify(r) + " and " + JSON.stringify(restaurant._id));
+                    if (JSON.stringify(r) == JSON.stringify(restaurant._id)) {
+                        match = true;
+                        console.log("MATCH!");
+                        let review = new db.Review(req.query);
+                        user.reviews.push(review._id);
+                        restaurant.reviews.push(review._id);
+                        user.save();
+                        restaurant.save();
+                        review.createdBy = user._id;
+                        review.restaurant = restaurant._id;
+                        review.save();
+                        res.json(review);
+                    }
+                });
             if (!match)
-            res.send("Visit this restaurant before posting a review!");
-            
+                res.send("Visit this restaurant before posting a review!");
+
         });
     });
 }
@@ -139,24 +173,24 @@ function getComments(req, res) {
     console.log("getComments()");
     let done = false;
     let revs = [];
-    let interval = setInterval(function (){
+    let interval = setInterval(function() {
         console.log("interval!");
-        if(done){
+        if (done) {
             clearInterval(interval);
             res.json(revs);
         }
-    },1);
+    }, 1);
     let id = req.query.r;
     //grab the restaurant by id
-    db.Restaurant.findOne({restaurantId: id}, function(err, restaurant){
+    db.Restaurant.findOne({ restaurantId: id }, function(err, restaurant) {
         console.log(restaurant);
         if (restaurant.reviews.length === 0) done = true;
         //grab all reviews in the restaurant
-        db.Review.find({_id: {$in: restaurant.reviews}}, function(err, reviews){
+        db.Review.find({ _id: { $in: restaurant.reviews } }, function(err, reviews) {
             console.log(reviews);
             //grab the user who made the comment
             reviews.forEach(r => {
-                db.User.findOne({_id: r.createdBy}, function (err, user) {
+                db.User.findOne({ _id: r.createdBy }, function(err, user) {
                     console.log(user);
                     let rev = {
                         _id: r._id,
@@ -176,8 +210,8 @@ function getComments(req, res) {
 }
 
 function sendList(req, res) {
-    db.User.findOne(req.user, function(err, user){
-        db.Restaurant.find({_id: {$in: user.visited}}, function(err, restaurants){
+    db.User.findOne(req.user, function(err, user) {
+        db.Restaurant.find({ _id: { $in: user.visited } }, function(err, restaurants) {
             res.json(restaurants);
         });
     });
