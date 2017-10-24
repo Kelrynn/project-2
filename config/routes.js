@@ -18,31 +18,47 @@ res.redirect('/login');
 //////////////
 ///	ROUTES ///
 //////////////
+
+//the home page
 router.route('/')
 	.get(authenticatedUser, restaurantsController.loadingPage);
 
+//this route is only hit when the user is on the landing page
 router.route('/location')
 	.post(restaurantsController.displayRestaurants);
 
+//user auth
 router.route('/login')
 	.get(userAuthenticationController.get)
 	.post(userAuthenticationController.postLogin);
 
+//user auth
 router.route('/signup')
 	.post(userAuthenticationController.postSignup);
 
+//user auth
 router.route('/logout')
 	.get(userAuthenticationController.logout);
 
+//display profile page
 router.route('/profile')
 	.get(authenticatedUser, restaurantsController.getProfile);
 
+//crud routes for comments
 router.route('/comments')
 	.post(authenticatedUser, restaurantsController.newComment)
-	.get(authenticatedUser, restaurantsController.getComments);
+	.get(authenticatedUser, restaurantsController.getComments)
+	.put(authenticatedUser, restaurantsController.editComment)
+	.delete(authenticatedUser, restaurantsController.deleteComment);
 
+//restaurant routes
 router.route('/restaurants')
 	.post(authenticatedUser, restaurantsController.toggleRestaurant)
 	.get(authenticatedUser, restaurantsController.sendList);
+
+//show one restaurant and edit routes
+router.route('/restaurants/:id')
+	.get(restaurantsController.getInfo)
+	.put(authenticatedUser, restaurantsController.editRestaurant);
 
 module.exports = router;

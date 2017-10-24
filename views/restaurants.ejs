@@ -20,7 +20,13 @@
 							<button class="btn comments">View or add Comments</button>
 						</div>
 						<form action="/comments" method="post" class="cardForm">
-							<input type="number" name='rating'>
+							<select name="rating" id="">
+								<option value="5">5</option>
+								<option value="4">4</option>
+								<option value="3">3</option>
+								<option value="2">2</option>
+								<option value="1">1</option>
+							</select>
 							<textarea name="comment" id="" cols="30" rows="10"></textarea>
 							<input type="submit">
 							<input type="hidden" value="<%=restaurants[i].id%>" name='restaurantId'>

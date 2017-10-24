@@ -184,9 +184,9 @@ function getComments(req, res) {
     //grab the restaurant by id
     db.Restaurant.findOne({ restaurantId: id }, function(err, restaurant) {
         console.log(restaurant);
-        if (restaurant.reviews.length === 0) done = true;
+        if (restaurant === null || restaurant.reviews.length === 0  ) done = true;
         //grab all reviews in the restaurant
-        db.Review.find({ _id: { $in: restaurant.reviews } }, function(err, reviews) {
+        else db.Review.find({ _id: { $in: restaurant.reviews } }, function(err, reviews) {
             console.log(reviews);
             //grab the user who made the comment
             reviews.forEach(r => {
@@ -217,12 +217,61 @@ function sendList(req, res) {
     });
 }
 
+function editComment(req, res) {
+    let comment = req.body;
+    db.Review.findOne({_id: comment.id}, function(err, review){
+        review = comment;
+        review.save();
+        res.json(review);
+    });
+}
+
+function deleteComment(req, res) {
+    let id = req.body.id;
+    db.Review.find({_id: id}, function (err, review){
+        db.Restaurant.findOne({_id: review.restaurant}, function(err, restaurant){
+            db.User.findOne({_id: review.createdBy}, function (err, User){
+                let indexRest = restaurant.reviews.indexOf(review._id);
+                let indexUser = user.reviews.indexOf(review._id);
+                user.reviews.splice(indexUser,1);
+                user.save();
+                restaurant.reviews.splice(indexRest,1);
+                restaurant.save();
+                db.Review.remove(review, function(err){
+                    res.send("Deleted comment");
+                });
+            });
+        });
+    });
+}
+
+function getInfo(req, res) {
+    let _id = req.params.id;
+    db.Restaurant.findOne({_id}, function (err, restaurant){
+        res.json(restaurant);
+    });
+}
+
+function editRestaurant(req ,res) {
+    let _id = req.params.id;
+    let rest = req.body;
+    db.Restaurant.findOne({_id}, function(err, restaurant){
+        restaurant = rest;
+        restaurant.save();
+        res.json(restaurant);
+    });
+}
+
 module.exports = {
-    loadingPage: loadingPage,
-    displayRestaurants: displayRestaurants,
-    getProfile: getProfile,
-    getComments: getComments,
-    toggleRestaurant: toggleRestaurant,
-    sendList: sendList,
-    newComment: newComment
+    loadingPage,
+    displayRestaurants,
+    getProfile,
+    getComments,
+    toggleRestaurant,
+    sendList,
+    newComment,
+    editComment,
+    deleteComment,
+    getInfo,
+    editRestaurant
 };
