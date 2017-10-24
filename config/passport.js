@@ -14,7 +14,7 @@ module.exports = function(passport) {
 			callback(err, user);
 		});
 	});
-
+	//strategy for users first time signup
 	passport.use('local-signup', new LocalStrategy({
 		usernameField : 'email',
 		passwordField : 'password',
@@ -36,7 +36,7 @@ module.exports = function(passport) {
 			}
 		});
 	}));
-
+	//strategy for users login. existing user.
 	passport.use('local-login', new LocalStrategy({
 		usernameField : 'email',
 		passwordField : 'password',

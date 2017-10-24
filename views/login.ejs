@@ -1,8 +1,10 @@
 <% include ./partials/header.ejs %>
 <div class="container-fluid bg-secondary">
+	<!-- if you messed up entering data -->
 	<%if(message.length > 0) {%>
 		<div class="alert alert-danger"><%= message %></div>
 	<%}%>
+	<!-- login with existing account -->
 	<div id='login' class="row justify-content-md-center">
 		<div class="col-md-6 mb-2 align-self-center">
 			<h2 class="bg-warning">Login</h2>
@@ -20,7 +22,7 @@
 				  <input class="btn btn-default" type="submit">
 			</form>
 		</div>
-
+		<!-- sign up with a new account -->
 		<div class="col-md-6 mb-2 align-self-center">
 
 			<h2 class="bg-warning">Sign Up</h2>

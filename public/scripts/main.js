@@ -5,6 +5,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 $(function () {
 	console.log("SANITY CHECK");
 	$('.cardForm').hide();
+	//only load this section at a current location
+	//this $.get changes the + buttons to - buttons if a user has been there before. works on reload.
 	if (window.location.href === 'http://localhost:3000/' || window.location.href === 'https://protected-dusk-42319.herokuapp.com/') {
 		$.get('/restaurants', function (data) {
 			var cards = $('.card');
@@ -17,6 +19,7 @@ $(function () {
 			}
 		});
 	}
+	//click listener for the + - button. adding and removing a restaurant to user list
 	$('.card').on('click', '.toggleRestaurant', function (event) {
 		var button = $(this);
 		var restaurant = {};
@@ -31,6 +34,7 @@ $(function () {
 			type: 'POST',
 			data: { restaurant: restaurant }
 		}).done(function (data) {
+			//dom manipulation when data comes back
 			console.log(data);
 			button.toggleClass('btn-success btn-danger');
 			if (button.hasClass('btn-success')) {
@@ -44,7 +48,7 @@ $(function () {
 			console.log("complete");
 		});
 	});
-
+	//click listener for comments display button
 	$('.card').on('click', '.comments', function (event) {
 		var card = $(this.closest('.card'));
 		var restaurantId = $(this.closest('.card'))[0].attributes['1'].value;
@@ -52,6 +56,7 @@ $(function () {
 			url: '/comments?r=' + restaurantId,
 			type: 'get'
 		}).done(function (data) {
+			//load all the comments if they exist. dom manipulation.
 			console.log("success");
 			var comments = $('<div>');
 			data.forEach(function (r) {
@@ -66,6 +71,7 @@ $(function () {
 			console.log("complete");
 		});
 	});
+	//on submit a new comment from form data.
 	$('.cardForm').on('submit', function (event) {
 		event.preventDefault();
 		var form = $(this);

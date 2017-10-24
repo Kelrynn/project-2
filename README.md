@@ -1,4 +1,4 @@
-#Project 2
+# Project 2
 
 
 
@@ -13,7 +13,7 @@
 
 Installation Instructions:
 1. Fork and clone
-	- Get a YELP API key and add to a `.env` file. 
+	- Get a YELP API key and add to a `.env` file.
 2. `npm install`
 3. `mongod`
 4. `node seed.js`

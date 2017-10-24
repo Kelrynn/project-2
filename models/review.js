@@ -1,5 +1,6 @@
 let mongoose = require('mongoose');
 
+//review schema with references to user and restaurant
 let ReviewSchema = mongoose.Schema({
 	rating: Number,
 	comment: String,

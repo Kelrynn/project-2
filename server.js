@@ -1,3 +1,4 @@
+////////// Dependencies //////////////
 const express 		= require('express'),
 	  app 			= express(),
 	  bodyParser 	= require('body-parser'),
@@ -12,6 +13,7 @@ const express 		= require('express'),
 
 require('dotenv').config();
 
+///// set up middleware ////////////
 app.use(morgan('dev')); 
 app.use(cookieParser());
 app.use(bodyParser()); 
@@ -29,14 +31,17 @@ app.use(flash());
 
 require('./config/passport')(passport);
 
+/// custom middleware!/////////
 let yelpToken = require('./controllers/yelpToken.js');
 app.use(yelpToken);
 
+//// set the user /////////
 app.use(function (req, res, next) {
 	res.locals.currentUser = req.user;
 	next();
 });
 
+/////////// use  the routes //////
 let routes = require('./config/routes');
 app.use(routes);
 

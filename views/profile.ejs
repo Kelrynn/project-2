@@ -13,6 +13,7 @@
 	<div class="main col mr-2">
 		<h2>Places</h2>
 		<hr>
+		<!-- all the places a user has been to -->
 		<%for (let i = 0; i < visited.length; i++){%>
 			<div class="card bg-light col-md"  restaurantId='<%=visited[i].restaurantId%>'>
 				<div class="card-body">
@@ -21,6 +22,7 @@
 				</div>
 			</div>
 		<%}%>
+		<!-- all the reviews a user has made -->
 		<h2>Reviews</h2>
 		<%for (let i = 0; i < reviews.length; i++){%>
 			<div class="card bg-light col">

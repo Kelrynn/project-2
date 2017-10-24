@@ -1,6 +1,7 @@
 let token;
 const request = require('request');
 
+//only grabs the yelp OAuth token if it doesnt already exist.
 function grabToken(req,res,next) {
 	if (token){
 		console.log('token exists');

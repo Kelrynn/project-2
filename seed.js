@@ -1,3 +1,4 @@
+/// include mongo db
 let mongoose = require('mongoose');
 let db = require('./models');
 
@@ -74,6 +75,7 @@ let sampleUsers = [
 ];
 
 //review>>restaurant>>user
+//clear all the data
 db.Review.remove({}, function(err) {
 	if(err) throw err;
 	console.log("Removed Reviews");
@@ -81,6 +83,7 @@ db.Review.remove({}, function(err) {
 		if(err) throw err;
 		console.log("Removed Restaurants");
 		db.User.remove({}, function(err) {
+			//add all the data and add references to each obj.
 			if(err) throw err;
 			console.log("Removed Users");
 			//create reviews

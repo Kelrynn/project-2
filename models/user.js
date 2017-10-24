@@ -2,6 +2,7 @@ let mongoose = require('mongoose');
 let bcrypt = require('bcrypt-nodejs');
 let Schema = mongoose.Schema;
 
+//user schema and references to visited and reviews lists 
 let User = mongoose.Schema({
 	local : {
 		email: String,

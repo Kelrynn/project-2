@@ -1,12 +1,13 @@
 const request = require('request');
 const db = require('../models');
 
-
+//this loads the front page with the gif and sends user location to /location
 function loadingPage(req, res, next) {
     console.log("GET '/'");
     res.render('index');
 }
 
+//grab the api data and use ejs to template into bootstrap cards
 function displayRestaurants(req, response) {
     console.log(`LOCATION: LAT: ${req.body.lat} LON: ${req.body.lon}`);
     let options = {
@@ -20,7 +21,7 @@ function displayRestaurants(req, response) {
         response.render('restaurants', { restaurants });
     });
 }
-
+//grab user data and populate into ejs with non referenced objects.
 function getProfile(req, res) {
     let user = req.user;
     let revs = [user.reviews];
@@ -71,7 +72,7 @@ function getProfile(req, res) {
         });
     });
 }
-
+// controller for the + - button. adds or removes to a user's list
 function toggleRestaurant(req, res) {
     let user = req.user;
     let done = false;
@@ -136,6 +137,7 @@ function toggleRestaurant(req, res) {
 
 }
 
+//adds a new comment onto a restaurant. will not allow commenting on a restaurant that has not been visited before.
 function newComment(req, res) {
     let match = false;
     //find user
@@ -169,6 +171,7 @@ function newComment(req, res) {
     });
 }
 
+//load all the comments under the form on the frontend.
 function getComments(req, res) {
     console.log("getComments()");
     let done = false;
@@ -209,6 +212,7 @@ function getComments(req, res) {
     });
 }
 
+//send a list of all user's restaurants
 function sendList(req, res) {
     db.User.findOne(req.user, function(err, user) {
         db.Restaurant.find({ _id: { $in: user.visited } }, function(err, restaurants) {
@@ -217,6 +221,7 @@ function sendList(req, res) {
     });
 }
 
+//PUT route for editing comments, grabs the data and updats accordingly. only one update needed due to reference.
 function editComment(req, res) {
     let comment = req.body;
     db.Review.findOne({_id: comment.id}, function(err, review){
@@ -226,6 +231,7 @@ function editComment(req, res) {
     });
 }
 
+//deletes the reference of the review in user and restaurant before removing the comment from the db.
 function deleteComment(req, res) {
     let id = req.body.id;
     db.Review.find({_id: id}, function (err, review){
@@ -245,6 +251,7 @@ function deleteComment(req, res) {
     });
 }
 
+//grab one restaurant
 function getInfo(req, res) {
     let _id = req.params.id;
     db.Restaurant.findOne({_id}, function (err, restaurant){
@@ -252,6 +259,7 @@ function getInfo(req, res) {
     });
 }
 
+//edit restaurant. only one update needed due to reference data.
 function editRestaurant(req ,res) {
     let _id = req.params.id;
     let rest = req.body;

@@ -1,6 +1,7 @@
 let passport = require('passport');
 let mongoose = require('mongoose');
 
+//displays the login and signup functionality
 function get(req, res, next) {
 	console.log("get controller'");
 	res.render('login', {message : req.flash('message')});
