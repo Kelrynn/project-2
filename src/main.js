@@ -62,7 +62,7 @@ $(function() {
 			console.log("success");
 			let comments = $('<div>');
 			data.forEach(r => {
-				let review = $('<div>').html("<b>"+r.createdBy+"</b>"+ ": " + r.rating + " " + r.comment).addClass('review col');
+				let review = $('<div>').html(`<p><b>${r.createdBy}:</b> ${r.rating} stars! \n${r.comment}</p>`).addClass('review col');
 				comments.append(review);
 			});
 			card.find('.comment_section').empty().append(comments);

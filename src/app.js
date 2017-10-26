@@ -1,8 +1,6 @@
 console.log("Sanity Check: JS is working!");
-$(function() {
     // grab user location
-        navigator.geolocation.getCurrentPosition(showPosition);   
-});
+    navigator.geolocation.getCurrentPosition(showPosition);   
 
 function showPosition(position) {
     let lat = position.coords.latitude;

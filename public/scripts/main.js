@@ -60,7 +60,7 @@ $(function () {
 			console.log("success");
 			var comments = $('<div>');
 			data.forEach(function (r) {
-				var review = $('<div>').html("<b>" + r.createdBy + "</b>" + ": " + r.rating + " " + r.comment).addClass('review col');
+				var review = $('<div>').html('<p><b>' + r.createdBy + ':</b> ' + r.rating + ' stars! \n' + r.comment + '</p>').addClass('review col');
 				comments.append(review);
 			});
 			card.find('.comment_section').empty().append(comments);
